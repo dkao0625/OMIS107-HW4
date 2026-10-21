@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#8c1d40">
+    <title>SCU Today — Santa Clara University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="SCU Today home">
+        <img class="brand-logo" src="/assets/scu-logo.png" alt="Santa Clara University">
+        <span class="brand-label">TODAY</span>
+      </a>
+      <a class="campus-link" href="https://www.scu.edu/" target="_blank" rel="noreferrer">Santa Clara University <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="live-dot"></span> YOUR CAMPUS, AT A GLANCE</p>
+          <h1>A good day<br>starts <em>here.</em></h1>
+          <p class="intro-description">What’s happening around Santa Clara today, all in one place.</p>
+        </div>
+        <div class="date-card">
+          <span class="date-label">TODAY ON CAMPUS</span>
+          <span class="date-value" id="today-date">Loading…</span>
+          <span class="date-note"><span class="sun-icon" aria-hidden="true">✳</span> Santa Clara, California</span>
+        </div>
+      </section>
+
+      <section class="dashboard" aria-label="Campus information">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow section-kicker">MAKE THE MOST OF IT</p>
+            <h2>The day, in the details</h2>
+          </div>
+          <span class="updated" id="updated-at"></span>
+        </div>
+
+        <section class="events-panel panel" aria-labelledby="events-heading">
+          <div class="panel-heading">
+            <div class="heading-icon calendar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M7.5 3.5v4M16.5 3.5v4M3.5 9.5h17M8 13h2m4 0h2M8 16.5h2"/></svg>
+            </div>
+            <div>
+              <p class="eyebrow">ON THE CALENDAR</p>
+              <h3 id="events-heading">Today’s events <span class="count" id="event-count">—</span></h3>
+            </div>
+            <a class="text-link panel-link" href="https://events.scu.edu/" target="_blank" rel="noreferrer">Full calendar <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <div class="event-tools">
+            <label class="search-box">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+              <input id="search" type="search" placeholder="Search events, places, or topics" autocomplete="off">
+              <span class="search-shortcut">⌘ K</span>
+            </label>
+            <label class="evening-filter">
+              <input id="evening-only" type="checkbox">
+              <span class="switch" aria-hidden="true"></span>
+              <span>Evening only <span class="evening-time">5 pm onward</span></span>
+            </label>
+          </div>
+
+          <div id="events-list" class="events-list" aria-live="polite">
+            <div class="loading-row"><span class="spinner" aria-hidden="true"></span> Gathering today’s campus events…</div>
+          </div>
+          <p class="filter-empty" id="filter-empty" hidden>No events match that search. Try another word or turn off the evening filter.</p>
+        </section>
+
+        <div class="info-grid">
+          <section class="panel info-panel library-panel" aria-labelledby="library-heading">
+            <div class="panel-heading">
+              <div class="heading-icon library-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5V5.8c0-.9.7-1.6 1.6-1.6H20v15.3H5.6c-.9 0-1.6.7-1.6 1.6Zm0 0c0-.9.7-1.6 1.6-1.6H20M8 8h8m-8 3h8"/></svg>
+              </div>
+              <div>
+                <p class="eyebrow">FIND YOUR FOCUS</p>
+                <h3 id="library-heading">Library hours</h3>
+              </div>
+            </div>
+            <div class="hours-value" id="library-hours">—</div>
+            <p class="supporting-copy" id="library-status">Checking today’s hours…</p>
+            <a class="text-link bottom-link" href="https://scu.libcal.com/hours/" target="_blank" rel="noreferrer">Hours &amp; locations <span aria-hidden="true">↗</span></a>
+          </section>
+
+          <section class="panel info-panel dining-panel" aria-labelledby="dining-heading">
+            <div class="panel-heading">
+              <div class="heading-icon dining-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M7 3v7m-3-7v4a3 3 0 0 0 6 0V3m-3 7v11m9-18v18m0-18c2.2 1.8 3.5 4.4 3.5 7.2H16"/></svg>
+              </div>
+              <div>
+                <p class="eyebrow">A LITTLE SOMETHING GOOD</p>
+                <h3 id="dining-heading">On the menu</h3>
+              </div>
+            </div>
+            <div id="dining-content" class="dining-content">
+              <p class="supporting-copy">Checking the dining menu…</p>
+            </div>
+            <a class="text-link bottom-link" href="https://scudining.cafebonappetit.com/#lunch" target="_blank" rel="noreferrer">Dining locations &amp; menus <span aria-hidden="true">↗</span></a>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made for the moments between classes.</p>
+      <p>Information is collected from <a href="https://www.scu.edu/" target="_blank" rel="noreferrer">official SCU sources</a>. Check source pages for the latest updates.</p>
+    </footer>
+  </body>
+</html>
