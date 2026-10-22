@@ -476,7 +476,15 @@ class Handler(BaseHTTPRequestHandler):
 
         path = self.path.split("?", 1)[0]
         path = "/index.html" if path == "/" else path
-        if path not in ("/index.html", "/styles.css", "/app.js", "/assets/scu-logo.png"):
+        if path == "/about":
+            path = "/about.html"
+        if path not in (
+            "/index.html",
+            "/about.html",
+            "/styles.css",
+            "/app.js",
+            "/assets/scu-logo.png",
+        ):
             self.send_error(404)
             return
         try:

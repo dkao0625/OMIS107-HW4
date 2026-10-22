@@ -43,6 +43,9 @@ a { color: inherit; }
 
 .brand-logo { display: block; width: auto; height: 56px; object-fit: contain; }
 .brand-label { color: #6f6870; font-size: 14px; font-weight: 700; letter-spacing: .15em; }
+.site-nav { display: flex; align-items: center; gap: 24px; height: 100%; }
+.site-nav-link { display: inline-flex; height: 100%; align-items: center; border-bottom: 2px solid transparent; color: #716970; font-size: 14px; text-decoration: none; }
+.site-nav-link:hover, .site-nav-link.is-current { border-bottom-color: var(--cardinal); color: var(--cardinal); }
 .campus-link { color: #625e63; font-size: 16px; text-decoration: none; }
 .campus-link span { color: var(--cardinal); margin-left: 4px; }
 
@@ -98,6 +101,23 @@ h1 em { color: var(--cardinal); font-weight: 500; }
 .sun-icon { color: #dda52b; font-size: 16px; }
 
 .dashboard { padding-bottom: 54px; }
+.about-main { max-width: 850px; }
+.about-intro { padding: 64px 7px 30px; }
+.about-intro h1 { margin-top: 20px; }
+.about-intro .intro-description { max-width: 600px; line-height: 1.6; }
+.about-panel { margin-bottom: 18px; padding: 28px 30px; }
+.about-panel h2 { margin: 10px 0 14px; }
+.about-panel > p:not(.eyebrow) { max-width: 710px; color: #666168; font-size: 16px; line-height: 1.75; }
+.about-panel code { padding: 2px 5px; border-radius: 3px; background: #f5f1f1; color: var(--cardinal); font: .9em ui-monospace, SFMono-Regular, Menlo, monospace; }
+.sources-panel { display: grid; grid-template-columns: 1fr 1.2fr; gap: 25px; }
+.source-list { margin: 0; padding: 0; list-style: none; }
+.source-list li { display: flex; flex-direction: column; gap: 4px; padding: 12px 0; border-bottom: 1px solid #f0eeed; }
+.source-list li:first-child { padding-top: 0; }
+.source-list li:last-child { padding-bottom: 0; border-bottom: 0; }
+.source-list a { color: var(--cardinal); font-size: 15px; font-weight: 600; text-decoration: none; }
+.source-list a:hover { text-decoration: underline; }
+.source-list li > span { color: #858087; font-size: 13px; }
+.about-return { margin: 24px 7px 0; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; margin: 0 7px 17px; }
 .section-kicker { margin-bottom: 7px; color: #969097; }
 h2, h3 { margin: 0; }
@@ -240,10 +260,12 @@ footer a:hover { color: var(--cardinal); }
 
 @media (min-width: 1200px) { main { width: 1010px; } }
 @media (max-width: 650px) {
-  .topbar { height: 62px; padding: 0 21px; }
+  .topbar { min-height: 62px; height: auto; padding: 7px 21px; flex-wrap: wrap; gap: 0 16px; }
   .brand-logo { height: 48px; }
   .brand-label { font-size: 11px; }
   .campus-link { font-size: 12px; }
+  .site-nav { order: 3; width: 100%; height: 38px; gap: 20px; }
+  .site-nav-link { font-size: 13px; }
   main { width: min(100% - 32px, 520px); }
   .intro { min-height: auto; padding: 42px 2px 34px; align-items: flex-start; flex-direction: column; gap: 21px; }
   h1 { font-size: 60px; }
@@ -260,6 +282,10 @@ footer a:hover { color: var(--cardinal); }
   .event-tag { display: none; }
   .info-grid { grid-template-columns: 1fr; gap: 11px; margin-top: 11px; }
   .info-panel { min-height: 177px; }
+  .about-intro { padding: 42px 2px 24px; }
+  .about-panel { padding: 22px 18px; }
+  .about-panel > p:not(.eyebrow) { font-size: 15px; }
+  .sources-panel { grid-template-columns: 1fr; gap: 20px; }
   footer { align-items: flex-start; flex-direction: column; padding: 15px 21px; }
 }
 
