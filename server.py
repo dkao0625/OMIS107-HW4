@@ -17,8 +17,8 @@ from urllib.robotparser import RobotFileParser
 from zoneinfo import ZoneInfo
 
 
-HOST = "127.0.0.1"
-PORT = 8000
+HOST = os.environ.get("HOST", "127.0.0.1")
+PORT = int(os.environ.get("PORT", "8000"))
 USER_AGENT = "SCU-CampusToday/1.0 (+https://github.com/dkao0625/OMIS107-HW4)"
 TIMEZONE = ZoneInfo("America/Los_Angeles")
 CACHE_SECONDS = 10 * 60
@@ -526,5 +526,5 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print(f"SCU Campus Today is running at http://{HOST}:{PORT}")
+    print(f"SCU Campus Today is listening on {HOST}:{PORT}")
     ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()

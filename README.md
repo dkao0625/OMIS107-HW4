@@ -16,3 +16,13 @@ python server.py
 ```
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000). Stop the server with Ctrl+C.
+
+## Deploy publicly with Render
+
+The included `render.yaml` configures a Render web service. To publish the app:
+
+1. Push this repository to GitHub.
+2. In Render, choose **New + → Blueprint**, connect this GitHub repository, and apply the `render.yaml` configuration.
+3. Wait for the service to finish deploying, then open the `onrender.com` URL shown on its Render dashboard. That HTTPS URL is the public link to share.
+
+Render supplies the service port through `PORT`; the app reads it from the environment and binds to `0.0.0.0` for public access. Its local defaults remain `127.0.0.1:8000`. On Render's free plan, a service may sleep when idle, so its first request after a pause can take longer.
