@@ -2,6 +2,7 @@ const eventsList = document.querySelector("#events-list");
 const searchInput = document.querySelector("#search");
 const eveningOnly = document.querySelector("#evening-only");
 let events = [];
+let sources = [];
 
 function eventHour(time) {
   const match = time.match(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/i);
@@ -28,7 +29,10 @@ function renderEvents() {
   if (!events.length) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent = "No events were listed for today. Check the calendar for the latest schedule.";
+    const calendarSource = sources.find((source) => source.name === "SCU Events Calendar");
+    empty.textContent = calendarSource && calendarSource.status !== "ok"
+      ? `Today’s events could not be loaded: ${calendarSource.status}`
+      : "No events were listed for today. Check the calendar for the latest schedule.";
     eventsList.append(empty);
     return;
   }
@@ -89,9 +93,10 @@ function renderDining(items, status) {
 async function loadToday() {
   try {
     const response = await fetch("/api/today");
-    if (!response.ok) throw new Error(`Campus sources returned ${response.status}.`);
     const data = await response.json();
-    if (data.error) throw new Error(data.error);
+    if (!response.ok || data.error) {
+      throw new Error(data.error || `Campus information could not be loaded (HTTP ${response.status}). Please try again later.`);
+    }
 
     document.querySelector("#today-date").textContent = data.date;
     const updatedTime = new Intl.DateTimeFormat("en-US", {
@@ -101,6 +106,7 @@ async function loadToday() {
     }).format(new Date(data.updated_at));
     document.querySelector("#updated-at").textContent = `Updated ${updatedTime}`;
     events = data.events || [];
+    sources = data.sources || [];
     document.querySelector("#library-hours").textContent = data.library.hours || "Hours unavailable";
     document.querySelector("#library-status").textContent = data.library.status === "ok"
       ? "Today at the University Library"
@@ -111,7 +117,9 @@ async function loadToday() {
     eventsList.replaceChildren();
     const message = document.createElement("div");
     message.className = "empty-state";
-    message.textContent = `Campus information could not be loaded. ${error.message}`;
+    message.textContent = error instanceof TypeError
+      ? "The campus server could not be reached. Check your connection and try again."
+      : `Campus information could not be loaded. ${error.message}`;
     eventsList.append(message);
     document.querySelector("#library-status").textContent = "Hours could not be loaded.";
     renderDining([], "Menu details could not be loaded.");

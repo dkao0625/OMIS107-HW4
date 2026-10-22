@@ -455,12 +455,16 @@ def get_dashboard() -> dict:
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
-        if self.path == "/api/today":
+        path = self.path.split("?", 1)[0]
+        if path == "/api/today":
             try:
                 body = json.dumps(get_dashboard(), ensure_ascii=False).encode("utf-8")
             except Exception as error:
-                body = json.dumps({"error": str(error)}).encode("utf-8")
-                self.send_response(502)
+                print(f"Dashboard API failed: {error}")
+                body = json.dumps(
+                    {"error": "Campus information is temporarily unavailable. Please try again later."}
+                ).encode("utf-8")
+                self.send_response(503)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
@@ -474,24 +478,24 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(body)
             return
 
-        path = self.path.split("?", 1)[0]
         path = "/index.html" if path == "/" else path
         if path == "/about":
             path = "/about.html"
         if path not in (
             "/index.html",
             "/about.html",
+            "/not-found.html",
             "/styles.css",
             "/app.js",
             "/assets/scu-logo.png",
         ):
-            self.send_error(404)
+            self.send_not_found()
             return
         try:
             with open(path.lstrip("/"), "rb") as file:
                 body = file.read()
         except OSError:
-            self.send_error(404)
+            self.send_not_found()
             return
         content_type = {
             ".html": "text/html; charset=utf-8",
@@ -501,6 +505,18 @@ class Handler(BaseHTTPRequestHandler):
         }[path[path.rfind("."):]]
         self.send_response(200)
         self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def send_not_found(self) -> None:
+        try:
+            with open("not-found.html", "rb") as file:
+                body = file.read()
+        except OSError:
+            body = b"<!doctype html><title>Not found</title><h1>Page not found</h1><p><a href='/'>Return to today</a></p>"
+        self.send_response(404)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
